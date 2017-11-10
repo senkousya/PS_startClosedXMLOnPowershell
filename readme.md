@@ -166,6 +166,7 @@ $workBook.SaveAs("c:\temp\helloworld.xlsx")
 
 ```
 
+作成したxlsxファイル  
 ![](image/update.helloworld.png)
 
 先程作成したhelloworld.xlsxが読み込まれ、B1セルにPowershellのバージョン情報を記載して保存する
