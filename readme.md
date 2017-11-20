@@ -12,7 +12,7 @@ Microsoft officeはバージョン2007からMicrosoft独自規格(doc,xls,ppt)�
 
 - [github - Open-XML-SDK](https://github.com/OfficeDev/Open-XML-SDK)
 
-OpenXml-SDKを使用して直接xmlsを取り扱っても良いが、なかなかとっつき辛い所があり。
+OpenXml-SDKを使用してxmlxファイルを取り扱っても良いが、なかなかとっつき辛い所があり。
 そんなOpenXml-SDKを簡易に扱えるようにラッピングしたライブラリがClosedXMlとなっている。
 
 ## 🔰ClosedXMLの環境構築
@@ -31,21 +31,23 @@ Powershell V5.0からPackageManagement（旧名称OneGet)なるいろんなプ�
 ### 🔰PackageManagementで使えるコマンドの確認
 
 ```Powershell
+#PackageManagementで利用できるコマンドの確認
 Get-Command -module PackageManagement
 ```
 
+▶PackageManagementではこんな感じのコマンドがつかえるらしい。  
 ![](image/get.command.PackageManagement.png)
 
-こんな感じのコマンドがつかえるらしい。
+### 🔰PackageManagementで使えるパッケージプロバイダにNugetがあるか確認
 
-### 🔰使えるパッケージプロバイダにNugetがあるか確認
-
-対応しているパッケージプロバイダにNugetがあるかどうか確認
+対応しているパッケージプロバイダにNugetがあるかどうか確認（一応）
 
 ```Powershell
+#利用できるパッケージプロバイダの確認
 Find-PackageProvider
 ```
 
+▶Find-PackageProviderで利用できるパッケージプロバイダの確認  
 ![](image/find.packageprovider.png)
 
 ### 🔰PackageManagementに接続されているパッケージプロバイダにNugetが存在するか確認
@@ -53,30 +55,29 @@ Find-PackageProvider
 パッケージプロバイダにNugetが登録されているか確認する。
 
 ```Powershell
+#ローカルで利用できるパケージプロバイダの確認
 Get-PackageProvider
 ```
 
+▶Get-PackageProviderでインストールされているパッケージプロバイダの確認  
 ![](image/get.packageprovider.png)
 
-Nugetが登録されていない場合は
+Nugetが登録されていない場合は下記のようにインストールすることができる。
 
 ```Powershell
 #管理者で実行
 Install-PackageProvider -Name Nuget
 ```
 
+▶パッケージプロバイダのインストール  
 ![](image/install.packageprovider.png)
-
-で登録できる。
 
 ### 🔰インストールしたいパッケージの確認
 
-Find-PackageでNugetのClosedXMLを探してみる
-
+▶Find-PackageでNugetのClosedXMLを探してみる  
 ![](image/find.package.step001.png)
 
-なん見つからない。verboseオプションをつけて詳細をみてみる。
-
+▶なんか見つからない。verboseオプションをつけて詳細をみてみる。  
 ![](image/find.package.step002.png)
 
 > `詳細: プロバイダー 'NuGet' を使用してパッケージを検索しています。`
@@ -84,21 +85,18 @@ Find-PackageでNugetのClosedXMLを探してみる
 
 ？？？
 
+▶Get-PackageProviderとGet-PackageSourceをみてみる。  
+Nugetのバージョンは2.8.5.208となっているが、Searching repositoryで見に行ってるのはV3の`https://api.nuget.org/v3/index.json`  
 ![](image/packagemanager.nuget.version.png)
 
-をみると、Nugetのバージョンは2.8.5.208となっているが、Searching repositoryで見に行ってるのはV3の`https://api.nuget.org/v3/index.json`
-
-なんか調べてみると、VSとPowershellで設定が競合していると言ってる人がいる。
-
+なんか調べてみると、VSとPowershellで設定が競合していると言ってる人がいる。  
 [Nuget settings conflict between Powershell and VS #4975](https://github.com/NuGet/Home/issues/4975)
 
 Set-PackageSourceでnuget.orgを`https://www.nuget.org/api/v2`にすればPackageManagementが動くようになるけれどVS2015のNugetがぶっこわれるらしい。
 
-それもどうなんだという感じなのでfind-packageのsourceオプションで`https://www.nuget.org/api/v2`を付けて動かしてみる。
-
+▶それもどうなんだという感じなのでfind-packageのsourceオプションで`https://www.nuget.org/api/v2`を付けて動かしてみる。  
+パッケージがありました。  
 ![](image/find.package.source.png)
-
-パッケージがありました。
 
 ### 🔰パッケージのインストール
 
@@ -106,25 +104,30 @@ Find-Packageで検索して、パイプラインでInstall-Packageに渡して�
 
 ```Powershell
 #管理者で実行
+#Find-packageでOpenXmlとclosedxmlを検索して、install-Packageに引き渡す
 Find-Package -Name DocumentFormat.OpenXml -Source https://www.nuget.org/api/v2 | Install-Package
 Find-Package -Name closedxml -Source https://www.nuget.org/api/v2 | Install-Package
 ```
 
+▶OpenXmlをインストール  
 ![](image/install.openxmlsdk.png)
 
+▶Closedxmlをインストール  
 ![](image/install.closedxml.png)
 
-get-packageでインストールされたのを確認
-
+▶get-packageでインストールされたのを確認  
 ![](image/get.package.png)
 
 ## 🔰ClosedXMLでファイルを作成してみる
 
 使い方については
 
-[ClosedXML - wiki](https://github.com/ClosedXML/ClosedXML/wiki)
+- [ClosedXML - wiki](https://github.com/ClosedXML/ClosedXML/wiki)
 
-にサンプルとか出来ること出来ない事等々情報が色々とあります。
+にサンプルとか出来ること出来ない事などなど情報が色々とあります。
+
+とりあえずHelloWorld的な事をやってみる。
+helloworldと記載されたxlsxを作成する。
 
 ```Powershell
 #DLLを読み込む。該当バージョンのClosedXMLはDocumentFormat.OpenXml.dllとFastMember.Signed.dllに依存関係があるので一緒に読み込む。
@@ -138,15 +141,17 @@ $worksheet.Cell("A1").Value = "Hello world";
 $workBook.SaveAs("c:\temp\helloworld.xlsx")
 ```
 
+▶上記コマンドで作成されたxlsxファイル  
 ![](image/make.helloworld.step001.png)
 
+▶上記コマンドで作成されたxlsxファイルの中身  
 ![](image/make.helloworld.step002.png)
-
-ファイルができました。
 
 ## 🔰ClosedXMLでファイルを読み込んで編集してみる
 
-先程作成したファイルを読み込み編集して保存してみる。
+xlsxファイルを読み込み、読み込んだファイルを編集してみる。
+
+先程作成したhelloworld.xlsxが読み込まれ、B1セルにPowershellのバージョン情報を記載して保存する。
 
 ```Powershell
 
@@ -166,10 +171,9 @@ $workBook.SaveAs("c:\temp\helloworld.xlsx")
 
 ```
 
-作成したxlsxファイル  
+▶上記コマンドを実行して変更されたファイル。  
+helloworldの所で生成したファイルに、powershellのバージョン情報が追記された事を確認できる。  
 ![](image/update.helloworld.png)
-
-先程作成したhelloworld.xlsxが読み込まれ、B1セルにPowershellのバージョン情報を記載して保存する
 
 ## 🔰セルをRANGEで指定する
 
