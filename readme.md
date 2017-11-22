@@ -12,7 +12,7 @@ Microsoft officeはバージョン2007からMicrosoft独自規格(doc,xls,ppt)�
 
 - [github - Open-XML-SDK](https://github.com/OfficeDev/Open-XML-SDK)
 
-OpenXml-SDKを使用してxmlxファイルを取り扱っても良いが、なかなかとっつき辛い所があり。
+OpenXml-SDKを使用してxlsxファイルを取り扱っても良いが、なかなかとっつき辛い所があり。
 そんなOpenXml-SDKを簡易に扱えるようにラッピングしたライブラリがClosedXMlとなっている。
 
 ## 🔰ClosedXMLの環境構築
