@@ -1,8 +1,10 @@
-# 🔰ClosedXMLをPowershellから触ってみる
+# 🔰ClosedXMLをPowershellからさわってみる
 
-## 🔰ClosedXMLの公式サイト
+## 🔰ClosedXMLの公式リポジトリ
 
 - [github - ClosedXML](https://github.com/ClosedXML/ClosedXML)
+
+※もともとはCodePlexにあったようですが、githubに移行したようです。
 
 ## 🔰ClosedXMLとは
 
@@ -15,6 +17,19 @@ Microsoft officeはバージョン2007からMicrosoft独自規格(doc,xls,ppt)�
 OpenXml-SDKを使用してxlsxファイルを取り扱っても良いが、なかなかとっつき辛い所があり。
 そんなOpenXml-SDKを簡易に扱えるようにラッピングしたライブラリがClosedXMlとなっている。
 
+## 🔰利用するバージョンについて 2018年7月追記
+
+この記事ではClosedXML.0.88.0＋Powershell v5の組み合わせについて説明しています。
+このバージョンのClosedXMLでは依存パッケージは下記の２つとなっています。
+
+- DocumentFormat.OpenXml (>= 2.7.2)
+- FastMember.Signed (>= 1.1.0)
+
+が、現在、最新のバージョンでは他にも依存パッケージが追加になっていたりするので注意してください。
+NugetのページのDependenciesに必要な物が書いてるので適宜、add-typeなりで読み込んで下さい。
+
+![](/image/dependencies.png)
+
 ## 🔰ClosedXMLの環境構築
 
 - [Nuget - OpenXML-SDK](https://www.nuget.org/packages/DocumentFormat.OpenXml/)
@@ -26,7 +41,7 @@ OpenXml-SDKを使用してxlsxファイルを取り扱っても良いが、な�
 
 Powershell V5.0からPackageManagement（旧名称OneGet)なるいろんなプロバイダーソース(Nugetやchocolateやetc)のパッケージを扱えるモジュールが追加されてたので本資料ではPackageManagementを使ってインストールする。
 
-なおPackageManagementやNugetを使いたくない場合は。githubのリポジトリをクローンしてコンパイルすれば多分OK。
+なおPackageManagementやNugetを使いたくない場合は。githubのリポジトリの[リリースページ](https://github.com/ClosedXML/ClosedXML/releases)からdllをダウンロードするなりしてdllを入手して下さい。
 
 ### 🔰PackageManagementで使えるコマンドの確認
 
@@ -35,7 +50,7 @@ Powershell V5.0からPackageManagement（旧名称OneGet)なるいろんなプ�
 Get-Command -module PackageManagement
 ```
 
-▶PackageManagementではこんな感じのコマンドがつかえるらしい。  
+▶PackageManagementではこんな感じのコマンドがつかえるらしい。
 ![](image/get.command.PackageManagement.png)
 
 ### 🔰PackageManagementで使えるパッケージプロバイダにNugetがあるか確認
